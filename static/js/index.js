@@ -122,7 +122,7 @@ function setupVideoCarouselAutoplay() {
 $(document).ready(function() {
     // Check for click events on the navbar burger icon
 
-    var options = {
+    var defaultOptions = {
 		slidesToScroll: 1,
 		slidesToShow: 1,
 		loop: true,
@@ -131,8 +131,30 @@ $(document).ready(function() {
 		autoplaySpeed: 5000,
     }
 
-	// Initialize all div with carousel class
-    var carousels = bulmaCarousel.attach('.carousel', options);
+    var isMobile = window.innerWidth <= 768;
+
+    var oursOptions = {
+        slidesToScroll: isMobile ? 1 : 4,
+        slidesToShow: isMobile ? 1 : 4,
+        loop: true,
+        infinite: true,
+        autoplay: true,
+        autoplaySpeed: 5000,
+    }
+
+    var comparisonOptions = {
+        slidesToScroll: 1,
+        slidesToShow: 1,
+        loop: true,
+        infinite: true,
+        autoplay: true,
+        autoplaySpeed: 5500,
+    }
+
+	// Initialize carousels with per-section behavior
+    bulmaCarousel.attach('#results-carousel', defaultOptions);
+    bulmaCarousel.attach('#slotmemory-method-carousel', oursOptions);
+    bulmaCarousel.attach('#comparison-group-carousel', comparisonOptions);
 	
     bulmaSlider.attach();
     

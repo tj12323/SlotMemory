@@ -18,7 +18,7 @@
   <meta property="og:title" content="SlotMemory: Object-Centric KV Memory for Streaming Long-Video Generation">
   <meta property="og:description" content="SlotMemory introduces object-centric KV memory for streaming long-video diffusion, enabling entity persistence and prompt-aware retrieval over 60-second interactive narratives.">
   <meta property="og:url" content="https://tj12323.github.io/SlotMemory/">
-  <meta property="og:image" content="https://tj12323.github.io/SlotMemory/static/images/carousel1.jpg">
+  <meta property="og:image" content="https://tj12323.github.io/SlotMemory/static/images/comparison_grid.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="SlotMemory - Research Preview">
@@ -34,7 +34,7 @@
   <meta name="twitter:creator" content="">
   <meta name="twitter:title" content="SlotMemory: Object-Centric KV Memory for Streaming Long-Video Generation">
   <meta name="twitter:description" content="SlotMemory introduces object-centric KV memory for streaming long-video diffusion, enabling entity persistence and prompt-aware retrieval over 60-second interactive narratives.">
-  <meta name="twitter:image" content="https://tj12323.github.io/SlotMemory/static/images/carousel1.jpg">
+  <meta name="twitter:image" content="https://tj12323.github.io/SlotMemory/static/images/comparison_grid.png">
   <meta name="twitter:image:alt" content="SlotMemory - Research Preview">
 
   <!-- Academic/Research Specific -->
@@ -116,7 +116,7 @@
     "datePublished": "2026-05-28",
     "publisher": { "@type": "Organization", "name": "arXiv" },
     "url": "https://tj12323.github.io/SlotMemory/",
-    "image": "https://tj12323.github.io/SlotMemory/static/images/carousel1.jpg",
+    "image": "https://tj12323.github.io/SlotMemory/static/images/comparison_grid.png",
     "keywords": ["streaming video generation", "long-video diffusion", "object-centric memory", "key-value memory", "SlotMemory", "computer vision", "generative AI"],
     "abstract": "Streaming video generation models typically rely on temporal-centric memory, which organizes historical context as raw frames, chunk segments, or unclustered tokens. SlotMemory introduces object-centric KV memory for streaming video diffusion, enabling entity-level persistence and prompt-aware retrieval across long horizons.",
     "citation": "Dou, Weijia and Li, Hui and Cui, Jiahao and Zhou, Lei and Wang, Jingdong and Zhu, Siyu. SlotMemory: Object-Centric KV Memory for Streaming Long-Video Generation. arXiv preprint, 2026.",
@@ -230,12 +230,12 @@
                     </span>
 
                     <span class="link-block">
-                      <a href="static/pdfs/paper.pdf" target="_blank"
+                      <a href="https://tj12323.github.io/SlotMemory/" target="_blank"
                       class="external-link button is-normal is-rounded is-dark">
                       <span class="icon">
-                        <i class="fas fa-file-pdf"></i>
+                        <i class="fas fa-database"></i>
                       </span>
-                      <span>Appendix</span>
+                      <span>Checkpoints</span>
                     </a>
                   </span>
 
@@ -250,15 +250,22 @@
                 </span>
 
                 <span class="link-block">
-                  <a href="https://tj12323.github.io/SlotMemory/" target="_blank"
+                  <a href="#BibTeX"
                   class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
-                    <i class="ai ai-arxiv"></i>
+                    <i class="fas fa-quote-right"></i>
                   </span>
-                  <span>Project</span>
+                  <span>BibTeX</span>
                 </a>
               </span>
             </div>
+            <h2 class="subtitle has-text-centered"><strong>Remember objects, not frames.</strong></h2>
+            <p class="subtitle has-text-centered">
+              <strong>81.61</strong> 60s Quality &nbsp;|&nbsp;
+              <strong>74.29</strong> 30s Dynamic Score &nbsp;|&nbsp;
+              <strong>22.8%</strong> Dynamic Consistency Gain &nbsp;|&nbsp;
+              <strong>60s</strong> Interactive Narratives
+            </p>
           </div>
         </div>
       </div>
@@ -272,7 +279,7 @@
   <div class="container is-max-desktop">
     <div class="hero-body">
       <video poster="" id="tree" autoplay controls muted loop height="100%" preload="metadata">
-        <source src="static/videos/banner_video.mp4" type="video/mp4">
+        <source src="static\videos\teaservideo.mp4" type="video/mp4">
       </video>
       <h2 class="subtitle has-text-centered">
         SlotMemory shifts long-video memory from temporal indexing ("when") to semantic slot routing ("what"), enabling persistent entity identity and prompt-aware retrieval in streaming diffusion generation.
@@ -282,108 +289,367 @@
 </section>
 <!-- End teaser video -->
 
-<!-- Paper abstract -->
+<!-- Method overview -->
 <section class="section hero is-light">
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
+        <h2 class="title is-3">Method Overview</h2>
         <div class="content has-text-justified">
           <p>
-            Streaming video generation models typically rely on temporal-centric memory, which organizes historical context as raw frames, chunk segments, or unclustered tokens. This organization frequently leads to identity drift and semantic inconsistency when entities exit the frame or during interactive prompt transitions. To address these limitations, we propose SlotMemory, an object-centric Key-Value (KV) memory mechanism for streaming video diffusion. Our approach shifts the memory abstraction from "when" an event occurred to "what" is being represented by decomposing the transformer's KV manifold into discrete, reusable semantic slots. By utilizing these slots as routing addresses to index and store high-fidelity KV tokens, we enable entity-level persistence and prompt-aware retrieval across long horizons. Evaluated on 60-second interactive narratives using the Wan2.1-T2V-1.3B backbone, SlotMemory achieves a state-of-the-art quality score of 81.61 and a 22.8% relative improvement in dynamic consistency over the strongest existing streaming baseline.
+            SlotMemory formulates streaming long-video generation as a bounded-memory read-write-update loop. For each chunk, the model retrieves semantically relevant slot memories, generates the current chunk, writes new slot-conditioned KV items, and updates the memory bank under a fixed budget.
           </p>
+          <ol>
+            <li><strong>Read:</strong> retrieve relevant slot memories from the long-term bank.</li>
+            <li><strong>Generate:</strong> denoise the current chunk with local and retrieved KV context.</li>
+            <li><strong>Write:</strong> convert current chunk features into slot-conditioned KV memories.</li>
+            <li><strong>Update:</strong> retain high-value memories and evict obsolete ones under budget.</li>
+          </ol>
+          <img src="static/images/pipeline.png" alt="SlotMemory read-write-update pipeline" loading="lazy"/>
+          <!-- <h2 class="subtitle has-text-centered">
+            Current Chunk -> Read Slot Memory -> Denoising Transformer -> Write New Slots -> Update Memory Bank -> Next Chunk
+          </h2> -->
         </div>
       </div>
     </div>
   </div>
 </section>
-<!-- End paper abstract -->
+<!-- End method overview -->
 
 
-<!-- Image carousel -->
-<section class="hero is-small">
+<!-- Results figures -->
+<!-- <section class="hero is-small">
   <div class="hero-body">
     <div class="container">
+      <h2 class="title is-3">Results</h2>
       <div id="results-carousel" class="carousel results-carousel">
        <div class="item">
-        <img src="static/images/carousel1.jpg" alt="First research result visualization" loading="lazy"/>
+        <img src="static/images/comparison_grid.png" alt="60-second interactive generation comparison" loading="lazy"/>
         <h2 class="subtitle has-text-centered">
-          Slot decomposition turns latent KV states into reusable object-centric memory units.
+          60-second interactive generation: SlotMemory reaches <strong>81.61</strong> Quality and <strong>25.60</strong> Avg. CLIP.
         </h2>
       </div>
       <div class="item">
-        <!-- Your image here -->
-        <img src="static/images/carousel2.jpg" alt="Second research result visualization" loading="lazy"/>
+        <img src="static/images/intro_comparison_grid.png" alt="Long-horizon identity consistency comparison" loading="lazy"/>
         <h2 class="subtitle has-text-centered">
-          Slot-routed retrieval maintains entity identity over long temporal horizons.
+          Long-horizon identity persistence under prompt transitions and scene changes.
         </h2>
       </div>
       <div class="item">
-        <!-- Your image here -->
-        <img src="static/images/carousel3.jpg" alt="Third research result visualization" loading="lazy"/>
+        <img src="static/images/clipscorebanksize.png" alt="Ablation over memory bank size" loading="lazy"/>
         <h2 class="subtitle has-text-centered">
-         Prompt-aware memory access improves interactive narrative consistency.
+         Memory budget analysis supports stronger consistency at extended horizons.
        </h2>
      </div>
      <div class="item">
-      <!-- Your image here -->
-      <img src="static/images/carousel4.jpg" alt="Fourth research result visualization" loading="lazy"/>
+      <img src="static/images/ablation_comparison_grid.png" alt="Ablation qualitative comparison" loading="lazy"/>
       <h2 class="subtitle has-text-centered">
-        On 60-second generation, SlotMemory improves quality and dynamic consistency.
+        Ablation study: full SlotMemory yields clearer interactions and more stable object counts.
       </h2>
     </div>
   </div>
 </div>
 </div>
-</section>
-<!-- End image carousel -->
+</section> -->
+<!-- End results figures -->
 
 
 
 
-<!-- Youtube video -->
+<!-- Results highlights -->
 <section class="hero is-small is-light">
   <div class="hero-body">
     <div class="container">
-      <!-- Paper video. -->
-      <h2 class="title is-3">Project Overview</h2>
+      <h2 class="title is-3">Stronger Consistency over Longer Videos</h2>
       <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
-          
-          <div class="publication-video">
-            <iframe src="https://tj12323.github.io/SlotMemory/" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          <div class="content has-text-justified">
+            <p><strong>Core takeaway:</strong> SlotMemory improves most at longer horizons (30-60s), where memory quality determines identity persistence and prompt adherence.</p>
+
+            <h3>60-second Interactive Multi-prompt</h3>
+            <table class="table is-fullwidth is-striped is-hoverable is-size-7">
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  <th>Quality</th>
+                  <th>0-10s CLIP</th>
+                  <th>10-20s</th>
+                  <th>20-30s</th>
+                  <th>30-40s</th>
+                  <th>40-50s</th>
+                  <th>50-60s</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Infinity-RoPE</td>
+                  <td>79.98</td>
+                  <td>23.87</td>
+                  <td>22.62</td>
+                  <td>22.16</td>
+                  <td>21.82</td>
+                  <td>22.20</td>
+                  <td>22.20</td>
+                </tr>
+                <tr>
+                  <td>LongLive</td>
+                  <td>79.09</td>
+                  <td>26.49</td>
+                  <td>25.60</td>
+                  <td>24.89</td>
+                  <td>24.48</td>
+                  <td>24.81</td>
+                  <td>24.54</td>
+                </tr>
+                <tr>
+                  <td>MemFlow</td>
+                  <td>78.57</td>
+                  <td>26.29</td>
+                  <td>24.09</td>
+                  <td>23.15</td>
+                  <td>23.93</td>
+                  <td>23.68</td>
+                  <td>23.39</td>
+                </tr>
+                <tr>
+                  <td><strong>SlotMemory</strong></td>
+                  <td><strong>81.61</strong></td>
+                  <td><strong>26.81</strong></td>
+                  <td><strong>26.11</strong></td>
+                  <td><strong>25.18</strong></td>
+                  <td><strong>25.33</strong></td>
+                  <td><strong>24.91</strong></td>
+                  <td><strong>25.25</strong></td>
+                </tr>
+              </tbody>
+            </table>
+            <p><small>All values above are aligned with the paper's 60s interactive table.</small></p>
+
+            <h3>30-second Single-prompt Long Video</h3>
+            <table class="table is-fullwidth is-striped is-hoverable is-size-7">
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  <th>Total</th>
+                  <th>Quality</th>
+                  <th>Semantic</th>
+                  <th>Dynamic</th>
+                  <th>Imaging</th>
+                  <th>Temporal Style</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Self-Forcing</td>
+                  <td>82.21</td>
+                  <td>83.38</td>
+                  <td>77.54</td>
+                  <td>51.85</td>
+                  <td>68.17</td>
+                  <td>23.31</td>
+                </tr>
+                <tr>
+                  <td>Infinity-RoPE</td>
+                  <td>83.16</td>
+                  <td>84.17</td>
+                  <td>79.13</td>
+                  <td>57.04</td>
+                  <td>67.94</td>
+                  <td>23.79</td>
+                </tr>
+                <tr>
+                  <td>MemFlow</td>
+                  <td>82.95</td>
+                  <td>83.86</td>
+                  <td>79.31</td>
+                  <td>60.46</td>
+                  <td>67.68</td>
+                  <td>23.89</td>
+                </tr>
+                <tr>
+                  <td>LongLive</td>
+                  <td>82.77</td>
+                  <td>83.31</td>
+                  <td><strong>80.64</strong></td>
+                  <td>40.19</td>
+                  <td>68.96</td>
+                  <td>23.97</td>
+                </tr>
+                <tr>
+                  <td><strong>SlotMemory</strong></td>
+                  <td><strong>84.28</strong></td>
+                  <td><strong>85.23</strong></td>
+                  <td>80.49</td>
+                  <td><strong>74.29</strong></td>
+                  <td><strong>72.26</strong></td>
+                  <td><strong>24.34</strong></td>
+                </tr>
+              </tbody>
+            </table>
+            <p>SlotMemory leads most long-horizon metrics, with especially large gains in <strong>Dynamic</strong> and <strong>Imaging Quality</strong>.</p>
           </div>
         </div>
       </div>
     </div>
   </div>
 </section>
-<!-- End youtube video -->
+<!-- End results highlights -->
 
 
 <!-- Video carousel -->
 <section class="hero is-small">
   <div class="hero-body">
     <div class="container">
-      <h2 class="title is-3">Qualitative Video Results</h2>
-      <div id="results-carousel-videos" class="carousel results-carousel">
-        <div class="item item-video1">
-          <video poster="" id="video1" controls muted loop height="100%" preload="metadata">
-            <!-- Your video file here -->
+      <h2 class="title is-3">Qualitative Demos (Video Placeholders)</h2>
+      <div class="content has-text-centered">
+        <p>Videos are temporary placeholders. The first row is ours-only (4 videos per view, scroll by group). The second row is grouped comparison (3 videos per group: Ours vs baselines).</p>
+      </div>
+
+      <h3 class="title is-4 has-text-centered">Ours Only: 4 Videos per View</h3>
+      <div id="slotmemory-method-carousel" class="carousel results-carousel">
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
             <source src="static/videos/carousel1.mp4" type="video/mp4">
           </video>
+          <h2 class="subtitle has-text-centered">Ours #1</h2>
         </div>
-        <div class="item item-video2">
-          <video poster="" id="video2" controls muted loop height="100%" preload="metadata">
-            <!-- Your video file here -->
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
             <source src="static/videos/carousel2.mp4" type="video/mp4">
           </video>
+          <h2 class="subtitle has-text-centered">Ours #2</h2>
         </div>
-        <div class="item item-video3">
-          <video poster="" id="video3" controls muted loop height="100%" preload="metadata">
-            <!-- Your video file here -->
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
             <source src="static/videos/carousel3.mp4" type="video/mp4">
           </video>
+          <h2 class="subtitle has-text-centered">Ours #3</h2>
+        </div>
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/carousel1.mp4" type="video/mp4">
+          </video>
+          <h2 class="subtitle has-text-centered">Ours #4</h2>
+        </div>
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/carousel2.mp4" type="video/mp4">
+          </video>
+          <h2 class="subtitle has-text-centered">Ours #5</h2>
+        </div>
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/carousel3.mp4" type="video/mp4">
+          </video>
+          <h2 class="subtitle has-text-centered">Ours #6</h2>
+        </div>
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/carousel1.mp4" type="video/mp4">
+          </video>
+          <h2 class="subtitle has-text-centered">Ours #7</h2>
+        </div>
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/carousel2.mp4" type="video/mp4">
+          </video>
+          <h2 class="subtitle has-text-centered">Ours #8</h2>
+        </div>
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/carousel3.mp4" type="video/mp4">
+          </video>
+          <h2 class="subtitle has-text-centered">Ours #9</h2>
+        </div>
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/carousel1.mp4" type="video/mp4">
+          </video>
+          <h2 class="subtitle has-text-centered">Ours #10</h2>
+        </div>
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/carousel2.mp4" type="video/mp4">
+          </video>
+          <h2 class="subtitle has-text-centered">Ours #11</h2>
+        </div>
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/carousel3.mp4" type="video/mp4">
+          </video>
+          <h2 class="subtitle has-text-centered">Ours #12</h2>
+        </div>
+      </div>
+
+      <h3 class="title is-4 has-text-centered">Grouped Comparison: 3 Videos per Group</h3>
+      <div id="comparison-group-carousel" class="carousel results-carousel">
+        <div class="item">
+          <div class="columns is-mobile">
+            <div class="column">
+              <video poster="" controls muted loop height="100%" preload="metadata"><source src="static/videos/carousel1.mp4" type="video/mp4"></video>
+              <h2 class="subtitle has-text-centered">Ours</h2>
+            </div>
+            <div class="column">
+              <video poster="" controls muted loop height="100%" preload="metadata"><source src="static/videos/carousel2.mp4" type="video/mp4"></video>
+              <h2 class="subtitle has-text-centered">Baseline A</h2>
+            </div>
+            <div class="column">
+              <video poster="" controls muted loop height="100%" preload="metadata"><source src="static/videos/carousel3.mp4" type="video/mp4"></video>
+              <h2 class="subtitle has-text-centered">Baseline B</h2>
+            </div>
+          </div>
+          <h2 class="subtitle has-text-centered">Comparison Group #1</h2>
+        </div>
+        <div class="item">
+          <div class="columns is-mobile">
+            <div class="column">
+              <video poster="" controls muted loop height="100%" preload="metadata"><source src="static/videos/carousel2.mp4" type="video/mp4"></video>
+              <h2 class="subtitle has-text-centered">Ours</h2>
+            </div>
+            <div class="column">
+              <video poster="" controls muted loop height="100%" preload="metadata"><source src="static/videos/carousel3.mp4" type="video/mp4"></video>
+              <h2 class="subtitle has-text-centered">Baseline A</h2>
+            </div>
+            <div class="column">
+              <video poster="" controls muted loop height="100%" preload="metadata"><source src="static/videos/carousel1.mp4" type="video/mp4"></video>
+              <h2 class="subtitle has-text-centered">Baseline B</h2>
+            </div>
+          </div>
+          <h2 class="subtitle has-text-centered">Comparison Group #2</h2>
+        </div>
+        <div class="item">
+          <div class="columns is-mobile">
+            <div class="column">
+              <video poster="" controls muted loop height="100%" preload="metadata"><source src="static/videos/carousel3.mp4" type="video/mp4"></video>
+              <h2 class="subtitle has-text-centered">Ours</h2>
+            </div>
+            <div class="column">
+              <video poster="" controls muted loop height="100%" preload="metadata"><source src="static/videos/carousel1.mp4" type="video/mp4"></video>
+              <h2 class="subtitle has-text-centered">Baseline A</h2>
+            </div>
+            <div class="column">
+              <video poster="" controls muted loop height="100%" preload="metadata"><source src="static/videos/carousel2.mp4" type="video/mp4"></video>
+              <h2 class="subtitle has-text-centered">Baseline B</h2>
+            </div>
+          </div>
+          <h2 class="subtitle has-text-centered">Comparison Group #3</h2>
+        </div>
+        <div class="item">
+          <div class="columns is-mobile">
+            <div class="column">
+              <video poster="" controls muted loop height="100%" preload="metadata"><source src="static/videos/carousel1.mp4" type="video/mp4"></video>
+              <h2 class="subtitle has-text-centered">Ours</h2>
+            </div>
+            <div class="column">
+              <video poster="" controls muted loop height="100%" preload="metadata"><source src="static/videos/carousel3.mp4" type="video/mp4"></video>
+              <h2 class="subtitle has-text-centered">Baseline A</h2>
+            </div>
+            <div class="column">
+              <video poster="" controls muted loop height="100%" preload="metadata"><source src="static/videos/carousel2.mp4" type="video/mp4"></video>
+              <h2 class="subtitle has-text-centered">Baseline B</h2>
+            </div>
+          </div>
+          <h2 class="subtitle has-text-centered">Comparison Group #4</h2>
         </div>
       </div>
     </div>
@@ -392,31 +658,11 @@
 <!-- End video carousel -->
 
 
-
-
-
-
-<!-- Paper poster -->
-<section class="hero is-small is-light">
-  <div class="hero-body">
-    <div class="container">
-      <h2 class="title">Poster</h2>
-
-      <iframe  src="static/pdfs/paper.pdf" width="100%" height="550">
-          </iframe>
-        
-      </div>
-    </div>
-  </section>
-<!--End paper poster -->
-
-
-
 <!--BibTex citation -->
   <section class="section" id="BibTeX">
     <div class="container is-max-desktop content">
       <div class="bibtex-header">
-        <h2 class="title">BibTeX</h2>
+        <h2 class="title">Citation</h2>
         <button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX to clipboard">
           <i class="fas fa-copy"></i>
           <span class="copy-text">Copy</span>
@@ -460,4 +706,3 @@
 
   </body>
   </html>
-
