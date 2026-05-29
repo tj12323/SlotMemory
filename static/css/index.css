@@ -92,7 +92,7 @@ body {
 .hero {
   position: relative;
   overflow: hidden;
-  padding-top: 4rem; /* More breathing room */
+  padding-top: 2rem;
 }
 
 .hero.is-light {
@@ -102,12 +102,12 @@ body {
 }
 
 .hero-body {
-  padding: 6rem 1.5rem;
+  padding: 3.5rem 1.5rem;
 }
 
 .teaser .hero-body {
-  padding-top: 3rem;
-  padding-bottom: 6rem;
+  padding-top: 1.5rem;
+  padding-bottom: 3rem;
 }
 
 .teaser {
@@ -122,7 +122,7 @@ body {
     font-size: clamp(3rem, 6vw, 4.5rem) !important; /* Extreme scale */
     letter-spacing: -0.03em !important;
     color: var(--text-primary) !important;
-    margin-bottom: 2.5rem !important;
+    margin-bottom: 1.5rem !important;
     line-height: 1 !important; /* Tight leading for large text */
 }
 
@@ -152,7 +152,7 @@ body {
 .publication-authors {
     font-family: 'Inter', sans-serif !important;
     font-weight: 500;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.9rem;
 }
 
 .publication-venue {
@@ -224,8 +224,8 @@ body {
 .publication-video {
     position: relative;
     width: 100%;
-    height: 0;
-    padding-bottom: 56.25%;
+    /* Using aspect-ratio instead of padding hack for modern browsers */
+    aspect-ratio: 16 / 9;
     overflow: hidden;
     border-radius: var(--border-radius-lg) !important;
     box-shadow: var(--shadow-xl);
@@ -250,6 +250,9 @@ body {
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-md);
   transition: var(--transition);
+  /* Ensure images have a default aspect ratio behavior if width/height attributes are missing */
+  max-width: 100%;
+  height: auto;
 }
 
 .publication-body img:hover {
@@ -263,9 +266,9 @@ body {
 }
 
 .results-carousel .item {
-  margin: 1rem;
+  margin: 0.6rem;
   overflow: hidden;
-  padding: 1.5rem;
+  padding: 1rem;
   font-size: 0;
   background: var(--background-primary);
   border-radius: var(--border-radius-lg);
@@ -285,13 +288,42 @@ body {
   border-radius: var(--border-radius);
   width: 100%;
   height: auto;
+  /* Prevent layout shift while loading */
+  background: var(--background-accent);
+}
+
+/* Enforce strict aspect ratio for all carousel videos globally to prevent CLS */
+#slotmemory-method-carousel.results-carousel video,
+#comparison-group-carousel.results-carousel video {
+  aspect-ratio: 832 / 480;
+  object-fit: cover;
 }
 
 .results-carousel .subtitle {
   font-size: 1rem !important;
   color: var(--text-secondary);
-  margin-top: 1rem;
+  margin-top: 0.7rem;
   font-weight: 500;
+}
+
+/* Ours-only row: 2x2 grid per carousel page, keep original 832x480 ratio */
+#slotmemory-method-carousel.results-carousel .item {
+  margin: 0.5rem;
+  padding: 0.75rem;
+}
+
+#slotmemory-method-carousel .ours-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+#slotmemory-method-carousel.results-carousel video {
+  width: 100%;
+  aspect-ratio: 832 / 480;
+  height: auto;
+  object-fit: cover;
+  background: #000;
 }
 
 /* Pagination and Misc Improvements */
@@ -313,13 +345,17 @@ body {
 }
 
 /* Section Titles - Bold Geometric Accents */
+.title.is-1, .title.is-2, .title.is-3, .title.is-4, .title.is-5, .title.is-6 {
+  font-family: 'Playfair Display', serif !important;
+}
+
 .title.is-3 {
-  font-family: 'Inter', sans-serif !important;
-  font-weight: 800 !important;
-  font-size: 2.25rem !important;
-  letter-spacing: -0.02em;
+  font-family: 'Playfair Display', serif !important;
+  font-weight: 900 !important;
+  font-size: 2.5rem !important;
+  letter-spacing: -0.01em;
   color: var(--text-primary);
-  margin-bottom: 3rem !important; /* Increased spacing */
+  margin-bottom: 1.8rem !important;
   position: relative;
   display: inline-block;
   padding-bottom: 0.5rem;
@@ -346,14 +382,14 @@ body {
 }
 
 .content.has-text-justified p {
-  margin-bottom: 2rem;
+  margin-bottom: 1.2rem;
 }
 
 /* Footer Improvements - High Contrast */
 .footer {
   background: var(--text-primary); /* Dark footer for anchor weight */
   color: var(--background-accent);
-  padding: 6rem 1.5rem; /* Massive padding */
+  padding: 3rem 1.5rem;
 }
 
 .footer .content {
@@ -397,7 +433,7 @@ code {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.8rem;
 }
 
 .copy-bibtex-btn {
@@ -660,6 +696,10 @@ code {
     margin: 0.5rem;
     padding: 1rem;
   }
+
+  #slotmemory-method-carousel .ours-grid {
+    gap: 0.6rem;
+  }
   
   .teaser .hero-body {
     padding: 1rem;
@@ -708,6 +748,7 @@ code {
     width: 100%;
     justify-content: center;
   }
+
 }
 
 /* Tablet Responsive */
@@ -721,15 +762,141 @@ code {
   }
 }
 
-/* Animation for page load */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
+/* ==========================================================================
+   Table of Contents / Sticky Navigation
+   ========================================================================== */
+
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.toc-container {
+  display: none; /* Hidden by default on mobile, handled differently */
+}
+
+@media screen and (min-width: 1025px) {
+  .page-wrapper {
+    flex-direction: row;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-left: 2rem;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  
+  .toc-container {
+    display: block;
+    position: sticky;
+    top: 4rem;
+    align-self: flex-start;
+    width: 250px;
+    flex-shrink: 0;
+    margin-right: 3rem;
+    padding-top: 6rem; /* Align with hero content */
+  }
+
+  .main-content-wrapper {
+    flex-grow: 1;
+    min-width: 0;
+  }
+}
+
+.toc-nav {
+  background: var(--background-primary);
+  border-left: 2px solid var(--border-color);
+  padding: 0 0 0 1.5rem;
+}
+
+.toc-title {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.01em;
+}
+
+.toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.toc-item {
+  margin-bottom: 0.75rem;
+}
+
+.toc-link {
+  display: block;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: var(--transition);
+  position: relative;
+  font-weight: 500;
+}
+
+.toc-link::before {
+  content: '';
+  position: absolute;
+  left: -1.5rem; /* Align over the border */
+  top: 0;
+  height: 100%;
+  width: 2px;
+  background: var(--primary-color);
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+  transform-origin: top;
+}
+
+.toc-link:hover, .toc-link.is-active {
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
+.toc-link.is-active::before {
+  transform: scaleY(1);
+}
+
+/* Mobile TOC (Sticky Top Bar) */
+.mobile-toc {
+  display: block;
+  position: sticky;
+  top: 0;
+  background: var(--background-primary);
+  z-index: 900;
+  padding: 1rem;
+  box-shadow: var(--shadow-sm);
+  border-bottom: 1px solid var(--border-color);
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mobile-toc .toc-list {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.mobile-toc .toc-link {
+  color: var(--text-secondary);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.mobile-toc .toc-link::before {
+  display: none; /* No vertical bar on mobile */
+}
+
+.mobile-toc .toc-link.is-active {
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 0.25rem;
+}
+
+@media screen and (min-width: 1025px) {
+  .mobile-toc {
+    display: none;
   }
 }
 

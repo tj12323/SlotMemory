@@ -66,8 +66,8 @@
   <title>SlotMemory: Object-Centric KV Memory for Streaming Long-Video Generation | Project Page</title>
   
   <!-- Favicon and App Icons -->
-  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
-  <link rel="apple-touch-icon" href="static/images/favicon.ico">
+  <link rel="icon" type="image/x-icon" href="static/images/logo.ico">
+  <link rel="apple-touch-icon" href="static/images/logo.ico">
   
   <!-- Critical CSS - Load synchronously -->
   <link rel="stylesheet" href="static/css/bulma.min.css">
@@ -88,7 +88,7 @@
   </noscript>
   
   <!-- Fonts - Optimized loading -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
   
   <!-- Defer non-critical JavaScript -->
   <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -109,7 +109,7 @@
       { "@type": "Person", "name": "Weijia Dou", "affiliation": { "@type": "Organization", "name": "Fudan University" } },
       { "@type": "Person", "name": "Hui Li", "affiliation": { "@type": "Organization", "name": "Fudan University" } },
       { "@type": "Person", "name": "Jiahao Cui", "affiliation": { "@type": "Organization", "name": "Fudan University" } },
-      { "@type": "Person", "name": "Lei Zhou", "affiliation": { "@type": "Organization", "name": "Meta super intelligence" } },
+      { "@type": "Person", "name": "Lei Zhou", "affiliation": { "@type": "Organization", "name": "Meta Superintelligence Labs" } },
       { "@type": "Person", "name": "Jingdong Wang", "affiliation": { "@type": "Organization", "name": "Baidu" } },
       { "@type": "Person", "name": "Siyu Zhu", "affiliation": { "@type": "Organization", "name": "Fudan University" } }
     ],
@@ -137,7 +137,7 @@
     "@type": "Organization",
     "name": "Fudan University",
     "url": "https://www.fudan.edu.cn/",
-    "logo": "https://tj12323.github.io/SlotMemory/static/images/favicon.ico",
+    "logo": "https://tj12323.github.io/SlotMemory/static/images/logo.ico",
     "sameAs": [
       "https://tj12323.github.io/SlotMemory/"
     ]
@@ -153,7 +153,7 @@
   </button>
 
   <!-- More Works Dropdown -->
-  <div class="more-works-container">
+  <!-- <div class="more-works-container">
     <button class="more-works-btn" onclick="toggleMoreWorks()" title="View Related Works">
       <i class="fas fa-flask"></i>
       More Works
@@ -193,7 +193,7 @@
         </a>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <main id="main-content">
   <section class="hero">
@@ -204,16 +204,16 @@
             <h1 class="title is-1 publication-title">SlotMemory: Object-Centric KV Memory for Streaming Long-Video Generation</h1>
             <div class="is-size-5 publication-authors">
               <span class="author-block">
-                Weijia Dou,</span>
-                <span class="author-block">Hui Li,</span>
-                <span class="author-block">Jiahao Cui,</span>
-                <span class="author-block">Lei Zhou,</span>
-                <span class="author-block">Jingdong Wang,</span>
-                <span class="author-block">Siyu Zhu</span>
+                Weijia Dou<sup>1</sup>,</span>
+                <span class="author-block">Hui Li<sup>1</sup>,</span>
+                <span class="author-block">Jiahao Cui<sup>1</sup>,</span>
+                <span class="author-block">Lei Zhou<sup>2</sup>,</span>
+                <span class="author-block">Jingdong Wang<sup>3</sup>,</span>
+                <span class="author-block">Siyu Zhu<sup>1</sup></span>
                   </div>
 
                   <div class="is-size-5 publication-authors">
-                    <span class="author-block">Fudan University, Meta super intelligence, Baidu<br>arXiv preprint (2026)</span>
+                    <span class="author-block"><sup>1</sup>Fudan University &nbsp; <sup>2</sup>Meta super intelligence &nbsp; <sup>3</sup>Baidu<br>arXiv preprint (2026)</span>
                     <span class="eql-cntrb"><small><br>Corresponding author: Siyu Zhu (siyuzhu@fudan.edu.cn)</small></span>
                   </div>
 
@@ -289,8 +289,34 @@
 </section>
 <!-- End teaser video -->
 
+
+<!-- Mobile sticky TOC -->
+<nav class="mobile-toc">
+  <ul class="toc-list">
+    <li class="toc-item"><a href="#method" class="toc-link">Method</a></li>
+    <li class="toc-item"><a href="#results" class="toc-link">Results</a></li>
+    <li class="toc-item"><a href="#demos" class="toc-link">Demos</a></li>
+    <li class="toc-item"><a href="#bibtex" class="toc-link">BibTeX</a></li>
+  </ul>
+</nav>
+
+<div class="page-wrapper">
+  <!-- Desktop sticky sidebar TOC -->
+  <aside class="toc-container">
+    <nav class="toc-nav">
+      <h3 class="toc-title">Contents</h3>
+      <ul class="toc-list">
+        <li class="toc-item"><a href="#method" class="toc-link">Method Overview</a></li>
+        <li class="toc-item"><a href="#results" class="toc-link">Consistency Metrics</a></li>
+        <li class="toc-item"><a href="#demos" class="toc-link">Qualitative Demos</a></li>
+        <li class="toc-item"><a href="#bibtex" class="toc-link">BibTeX</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <div class="main-content-wrapper">
 <!-- Method overview -->
-<section class="section hero is-light">
+<section id="method" class="section hero is-light">
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
@@ -357,16 +383,16 @@
 
 
 <!-- Results highlights -->
-<section class="hero is-small is-light">
+<section id="results" class="hero is-small is-light">
   <div class="hero-body">
     <div class="container">
-      <h2 class="title is-3">Stronger Consistency over Longer Videos</h2>
+      <h2 class="title is-3">Enhanced Consistency in Extended Video Generation</h2>
       <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
           <div class="content has-text-justified">
-            <p><strong>Core takeaway:</strong> SlotMemory improves most at longer horizons (30-60s), where memory quality determines identity persistence and prompt adherence.</p>
+            <p><strong>Core takeaway:</strong> SlotMemory demonstrates pronounced improvements in long-horizon video synthesis (30–60s), where maintaining memory fidelity is critical for preserving entity identity and adhering to prompt instructions. These results highlight the efficacy of object-centric KV memory over conventional temporal-centric approaches.</p>
 
-            <h3>60-second Interactive Multi-prompt</h3>
+            <h3>60-second Interactive Multi-Prompt Evaluation</h3>
             <table class="table is-fullwidth is-striped is-hoverable is-size-7">
               <thead>
                 <tr>
@@ -423,9 +449,8 @@
                 </tr>
               </tbody>
             </table>
-            <p><small>All values above are aligned with the paper's 60s interactive table.</small></p>
 
-            <h3>30-second Single-prompt Long Video</h3>
+            <h3>30-second Single-Prompt Long Video Evaluation</h3>
             <table class="table is-fullwidth is-striped is-hoverable is-size-7">
               <thead>
                 <tr>
@@ -497,87 +522,33 @@
 
 
 <!-- Video carousel -->
-<section class="hero is-small">
+<section id="demos" class="hero is-small">
   <div class="hero-body">
     <div class="container">
-      <h2 class="title is-3">Qualitative Demos (Video Placeholders)</h2>
+      <h2 class="title is-3">Qualitative Demonstrations</h2>
       <div class="content has-text-centered">
-        <p>Videos are temporary placeholders. The first row is ours-only (4 videos per view, scroll by group). The second row is grouped comparison (3 videos per group: Ours vs baselines).</p>
+        <p>In <strong>Ours Only: 2x2 per Group</strong>, <strong>Group #1</strong> corresponds to the 60-second interactive multi-prompt scenario, while <strong>Group #2</strong> corresponds to the 30-second single-prompt evaluation. The second row facilitates direct visual comparison between SlotMemory outputs and baseline methods.</p>
       </div>
 
-      <h3 class="title is-4 has-text-centered">Ours Only: 4 Videos per View</h3>
+      <h3 class="title is-4 has-text-centered">Ours Only: 2x2 per Group</h3>
       <div id="slotmemory-method-carousel" class="carousel results-carousel">
         <div class="item">
-          <video poster="" controls muted loop height="100%" preload="metadata">
-            <source src="static/videos/carousel1.mp4" type="video/mp4">
-          </video>
-          <h2 class="subtitle has-text-centered">Ours #1</h2>
+          <div class="ours-grid">
+            <video poster="" controls muted loop preload="metadata"><source src="static/videos/60s-1.mp4" type="video/mp4"></video>
+            <video poster="" controls muted loop preload="metadata"><source src="static/videos/60s-2.mp4" type="video/mp4"></video>
+            <video poster="" controls muted loop preload="metadata"><source src="static/videos/60s-3.mp4" type="video/mp4"></video>
+            <video poster="" controls muted loop preload="metadata"><source src="static/videos/60s-4.mp4" type="video/mp4"></video>
+          </div>
+          <h2 class="subtitle has-text-centered">Ours Group #1 (60s)</h2>
         </div>
         <div class="item">
-          <video poster="" controls muted loop height="100%" preload="metadata">
-            <source src="static/videos/carousel2.mp4" type="video/mp4">
-          </video>
-          <h2 class="subtitle has-text-centered">Ours #2</h2>
-        </div>
-        <div class="item">
-          <video poster="" controls muted loop height="100%" preload="metadata">
-            <source src="static/videos/carousel3.mp4" type="video/mp4">
-          </video>
-          <h2 class="subtitle has-text-centered">Ours #3</h2>
-        </div>
-        <div class="item">
-          <video poster="" controls muted loop height="100%" preload="metadata">
-            <source src="static/videos/carousel1.mp4" type="video/mp4">
-          </video>
-          <h2 class="subtitle has-text-centered">Ours #4</h2>
-        </div>
-        <div class="item">
-          <video poster="" controls muted loop height="100%" preload="metadata">
-            <source src="static/videos/carousel2.mp4" type="video/mp4">
-          </video>
-          <h2 class="subtitle has-text-centered">Ours #5</h2>
-        </div>
-        <div class="item">
-          <video poster="" controls muted loop height="100%" preload="metadata">
-            <source src="static/videos/carousel3.mp4" type="video/mp4">
-          </video>
-          <h2 class="subtitle has-text-centered">Ours #6</h2>
-        </div>
-        <div class="item">
-          <video poster="" controls muted loop height="100%" preload="metadata">
-            <source src="static/videos/carousel1.mp4" type="video/mp4">
-          </video>
-          <h2 class="subtitle has-text-centered">Ours #7</h2>
-        </div>
-        <div class="item">
-          <video poster="" controls muted loop height="100%" preload="metadata">
-            <source src="static/videos/carousel2.mp4" type="video/mp4">
-          </video>
-          <h2 class="subtitle has-text-centered">Ours #8</h2>
-        </div>
-        <div class="item">
-          <video poster="" controls muted loop height="100%" preload="metadata">
-            <source src="static/videos/carousel3.mp4" type="video/mp4">
-          </video>
-          <h2 class="subtitle has-text-centered">Ours #9</h2>
-        </div>
-        <div class="item">
-          <video poster="" controls muted loop height="100%" preload="metadata">
-            <source src="static/videos/carousel1.mp4" type="video/mp4">
-          </video>
-          <h2 class="subtitle has-text-centered">Ours #10</h2>
-        </div>
-        <div class="item">
-          <video poster="" controls muted loop height="100%" preload="metadata">
-            <source src="static/videos/carousel2.mp4" type="video/mp4">
-          </video>
-          <h2 class="subtitle has-text-centered">Ours #11</h2>
-        </div>
-        <div class="item">
-          <video poster="" controls muted loop height="100%" preload="metadata">
-            <source src="static/videos/carousel3.mp4" type="video/mp4">
-          </video>
-          <h2 class="subtitle has-text-centered">Ours #12</h2>
+          <div class="ours-grid">
+            <video poster="" controls muted loop preload="metadata"><source src="static/videos/30s-1.mp4" type="video/mp4"></video>
+            <video poster="" controls muted loop preload="metadata"><source src="static/videos/30s-2.mp4" type="video/mp4"></video>
+            <video poster="" controls muted loop preload="metadata"><source src="static/videos/30s-3.mp4" type="video/mp4"></video>
+            <video poster="" controls muted loop preload="metadata"><source src="static/videos/30s-4.mp4" type="video/mp4"></video>
+          </div>
+          <h2 class="subtitle has-text-centered">Ours Group #2 (30s)</h2>
         </div>
       </div>
 
@@ -659,7 +630,7 @@
 
 
 <!--BibTex citation -->
-  <section class="section" id="BibTeX">
+  <section id="bibtex" class="section">
     <div class="container is-max-desktop content">
       <div class="bibtex-header">
         <h2 class="title">Citation</h2>
@@ -678,6 +649,8 @@
     </div>
 </section>
 <!--End BibTex citation -->
+  </div> <!-- End main-content-wrapper -->
+</div> <!-- End page-wrapper -->
 
 
   <footer class="footer">

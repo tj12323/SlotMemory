@@ -131,15 +131,13 @@ $(document).ready(function() {
 		autoplaySpeed: 5000,
     }
 
-    var isMobile = window.innerWidth <= 768;
-
     var oursOptions = {
-        slidesToScroll: isMobile ? 1 : 4,
-        slidesToShow: isMobile ? 1 : 4,
+        slidesToScroll: 1,
+        slidesToShow: 1,
         loop: true,
         infinite: true,
         autoplay: true,
-        autoplaySpeed: 5000,
+        autoplaySpeed: 65000,
     }
 
     var comparisonOptions = {
@@ -148,7 +146,7 @@ $(document).ready(function() {
         loop: true,
         infinite: true,
         autoplay: true,
-        autoplaySpeed: 5500,
+        autoplaySpeed: 30000,
     }
 
 	// Initialize carousels with per-section behavior
@@ -162,3 +160,32 @@ $(document).ready(function() {
     setupVideoCarouselAutoplay();
 
 })
+
+
+// TOC Active State highlighting
+$(document).ready(function() {
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.toc-link');
+
+  if (sections.length > 0 && navLinks.length > 0) {
+    const observerOptions = {
+      root: null,
+      rootMargin: '-20% 0px -60% 0px',
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(link => link.classList.remove('is-active'));
+          
+          const activeId = entry.target.getAttribute('id');
+          const activeLinks = document.querySelectorAll('.toc-link[href="#' + activeId + '"]');
+          activeLinks.forEach(link => link.classList.add('is-active'));
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(section => observer.observe(section));
+  }
+});
