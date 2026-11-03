@@ -1,0 +1,3 @@
+[submodule "third_party/slotcontrast"]
+	path = third_party/slotcontrast
+	url = https://github.com/martius-lab/slotcontrast.git
