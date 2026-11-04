@@ -12,9 +12,11 @@
   </a>
 </p>
 
-**Weijia Dou¹, Hui Li¹, Jiahao Cui¹, Lei Zhou², Jingdong Wang³, Siyu Zhu¹***
+**Weijia Dou<sup>1</sup>, Hui Li<sup>1</sup>, Jiahao Cui<sup>1</sup>, Lei Zhou<sup>3</sup>, Jingdong Wang<sup>4</sup>, Siyu Zhu<sup>1,2,✉</sup>**
 
-¹ Fudan University &nbsp;&nbsp; ² Meta Superintelligence Labs &nbsp;&nbsp; ³ Baidu
+<sup>1</sup> Fudan University, <sup>2</sup> Shanghai Innovation Institute, <sup>3</sup> Meta Superintelligence Labs, <sup>4</sup> Baidu
+
+<sup>✉</sup> Corresponding author.
 
 ---
 
